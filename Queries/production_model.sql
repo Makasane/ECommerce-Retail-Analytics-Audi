@@ -9,6 +9,8 @@ WITH NormalizedTransactions AS (
     CAST(transaction_id AS STRING) AS tx_id,
     CAST(cust_id AS INT64) AS customer_fk,
     PARSE_DATE('%d-%m-%Y', CAST(tran_date AS STRING)) AS transaction_timestamp,
+    CAST(prod_cat_code AS INT64) AS category_fk,
+    CAST(prod_subcat_code AS INT64) AS subcategory_fk,
     CAST(Qty AS INT64) AS item_quantity,
     CAST(Rate AS NUMERIC) AS unit_rate,
     CAST(Tax AS NUMERIC) AS line_tax,
@@ -34,6 +36,11 @@ FROM
 LEFT JOIN 
   `pepkor-retail-analytics.dimensions.product_hierarchy` p
   ON tx.category_fk = p.prod_cat_code 
+  AND tx.subcategory_fk = p.prod_sub_cat_code -- Composite Multi-Key Join Integrity Alignment
+GROUP BY 
+  1, 2, 3
+ORDER BY 
+  integrated_gross_revenue DESC;
   AND tx.subcategory_fk = p.prod_sub_cat_code -- Composite Multi-Key Join Integrity Alignment
 GROUP BY 
   1, 2, 3
