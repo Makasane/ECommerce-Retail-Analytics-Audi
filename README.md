@@ -96,7 +96,7 @@ ORDER BY
 The analytical data layers structured within the database engine were integrated directly into Looker Studio to deliver real-time, interactive, self-service tracking interfaces. The UX architecture was built specifically to solve practical retail inquiries across core internal departments:
 
 ### 🖥️ Live Production Dashboard Interface
-> **[👉 CLICK HERE TO INTERACT WITH THE LIVE VIEW WORKSPACE PORTAL](https://google.com)**
+> **[👉 CLICK HERE TO INTERACT WITH THE LIVE VIEW WORKSPACE PORTAL](https://datastudio.google.com/reporting/e11d2773-4684-4d60-af80-ec44e1c902ee)**
 
 Below is the verified operational business intelligence configuration matching the master database engine balance matrices:
 
