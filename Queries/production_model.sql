@@ -41,15 +41,3 @@ GROUP BY
   1, 2, 3
 ORDER BY 
   integrated_gross_revenue DESC;
-  `pepkor-retail-analytics.dimensions.product_hierarchy` p
-  ON tx.category_fk = p.prod_cat_code 
-  AND tx.subcategory_fk = p.prod_sub_cat_code -- Composite Multi-Key Join Integrity Alignment
-GROUP BY 
-  1, 2, 3
-ORDER BY 
-  integrated_gross_revenue DESC;
-  AND tx.subcategory_fk = p.prod_sub_cat_code -- Composite Multi-Key Join Integrity Alignment
-GROUP BY 
-  1, 2, 3
-ORDER BY 
-  integrated_gross_revenue DESC;
