@@ -108,12 +108,12 @@ To fulfill rigorous audit compliance standards, the visualization engine hosts d
 * **Target Total Record Counter Balance:** `20,876` records verified across multi-table composite merges.
 * **Target Average System Tax Margin Baseline:** `R247.86` control total balance check.
 
-### 📈 5.1 Business Interpretation & Strategic Insights
+###  5.1 Business Interpretation & Strategic Insights
 A deep-dive data distribution assessment reveals critical structural insights across core operational divisions:
 * **Digital Channel Dominance:** The `e-Shop` distribution platform is the primary revenue engine, generating **R22,185,609.88 (40.74% of total turnover)**. It completely dominates physical channel formats, single-handedly outperforming the combined sales volumes of both traditional `MBR` (20.03%) and `Flagship store` (20.03%) avenues. 
 * **Anchor Category Synergies:** `Books` and `Electronics` serve as high-velocity anchor departments. Consumers show a massive, structural preference for digital acquisition channels in these segments, suggesting that physical stock allocations should be leanly optimized in favor of expanded e-commerce fulfillment hubs.
 
-### 🕵️‍♂️ 5.2 Advanced Compliance, Outlier & Tax Validation
+###  5.2 Advanced Compliance, Outlier & Tax Validation
 To guarantee extreme financial tracking precision for senior executive decision-making, strict programmatic variance logic checks were deployed:
 * **Tax Pipeline Verification:** The database shows an absolute, mathematically uniform **10.50% system-wide Effective Tax Rate** across all processed rows. This structural constant verifies that zero row-inflation, table leakage, or record mismatching occurred during multi-table relational schema connections.
 * **Bulk-Purchase Outlier Detection:** Programmatic Interquartile Range (IQR) boundary scanning isolated exactly **152 high-value outlier transactions** operating above the standard threshold boundary of **R8,017.74**. These bulk lines contribute a concentrated **R1,240,406.70** to gross performance asset volume, serving as an automated radar system to track institutional bulk purchasing and risk vectors.
