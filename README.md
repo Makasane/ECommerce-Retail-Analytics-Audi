@@ -1,9 +1,9 @@
-# 🏬 Relational Brick-and-Mortar Retail Star Schema & Performance Audit
+#  Relational Brick-and-Mortar Retail Star Schema & Performance Audit
 > **Enterprise Business Intelligence Engineering Hub Developed with Python, SQL, and Looker Studio**
 
 ---
 
-## 📌 1. Project Executive Summary
+##  1. Project Executive Summary
 This enterprise business intelligence portfolio maps out an end-to-end relational data processing architecture using a multi-table retail database spanning **20,876 active transaction records**. In large-scale retail ecosystems like Pepkor, raw system files contain operational noise, missing demographics, and transaction loops that degrade dashboard tracking accuracy.
 
 This project resolves these constraints through a strict 5-stage lifecycle framework:
@@ -15,7 +15,7 @@ This project resolves these constraints through a strict 5-stage lifecycle frame
 
 ---
 
-## 🛠️ 2. Comprehensive Technical Tech Stack
+##  2. Comprehensive Technical Tech Stack
 * **Language & Engineering Environment:** Python 3.10+ (Google Colab, Pandas, NumPy, Matplotlib, Seaborn)
 * **Data Warehousing & SQL Dialect:** Google BigQuery Serverless Infrastructure (Standard SQL, CTEs, Relational Joins)
 * **Visualization Layer:** Looker Studio Pro (Self-service business intelligence dashboarding)
@@ -23,7 +23,7 @@ This project resolves these constraints through a strict 5-stage lifecycle frame
 
 ---
 
-## 🔍 3. Data Validation & Quality Assurance (The Retail Ingest Audit)
+##  3. Data Validation & Quality Assurance (The Retail Ingest Audit)
 
 Before multi-table table mapping was executed, a rigorous input verification protocol was managed via Python to shield downstream report matrix views from corrupted entries:
 * **Return Log Isolation:** Isolated system records showing negative transaction variables (`Qty < 0`) into a dedicated lookup tier, ensuring forward sales charts isolate pure consumer demand velocity.
@@ -47,7 +47,7 @@ def run_retail_ingest_audit(file_path):
 
 ---
 
-## 🗄️ 4. SQL Data Modeling & Schema Normalization
+##  4. SQL Data Modeling & Schema Normalization
 
 The optimized data subsets were migrated into production-ready tables. To meet the central enterprise requirement of establishing a "single source of truth," a complex analytical query script structures the core operational fields:
 
@@ -91,18 +91,18 @@ ORDER BY
 
 ---
 
-## 📊 5. Looker Studio Business Intelligence Dashboard
+##  5. Looker Studio Business Intelligence Dashboard
 
 The analytical data layers structured within the database engine were integrated directly into Looker Studio to deliver real-time, interactive, self-service tracking interfaces. The UX architecture was built specifically to solve practical retail inquiries across core internal departments:
 
-### 🖥️ Live Production Dashboard Interface
-> **[👉 CLICK HERE TO INTERACT WITH THE LIVE VIEW WORKSPACE PORTAL](https://datastudio.google.com/reporting/e11d2773-4684-4d60-af80-ec44e1c902ee)**
+###  Live Production Dashboard Interface
+> **[ CLICK HERE TO INTERACT WITH THE LIVE VIEW WORKSPACE PORTAL](https://datastudio.google.com/reporting/e11d2773-4684-4d60-af80-ec44e1c902ee)**
 
 Below is the verified operational business intelligence configuration matching the master database engine balance matrices:
 
 ![Master Business Intelligence Dashboard](dashboard_preview.png)
 
-### 🔒 Closed-Loop Output Verification & Reporting Validation
+###  Closed-Loop Output Verification & Reporting Validation
 To fulfill rigorous audit compliance standards, the visualization engine hosts dedicated control anchors to track performance accuracy against the background data repository layers:
 * **Target Grand Total Revenue Anchor:** `R54,453,885.07` *(Verified 1:1 down to the absolute cent against backend Python execution sums)*
 * **Target Total Record Counter Balance:** `20,876` records verified across multi-table composite merges.
@@ -110,7 +110,7 @@ To fulfill rigorous audit compliance standards, the visualization engine hosts d
 
 ---
 
-## 📂 6. Repository Architecture & Navigation
-* `⚙️ Scripts/`: Programmatic Python source files executing pipeline data cleaning, ingestion formatting, and database verification audits.
-* `💾 Queries/`: Production-ready `.sql` files containing schema-building dimension code blocks and BigQuery aggregation scripts.
-* `📊 Dashboard/`: Interface screenshots, data wireframe layout blueprints, and visual presentation assets.
+##  6. Repository Architecture & Navigation
+* ` Scripts/`: Programmatic Python source files executing pipeline data cleaning, ingestion formatting, and database verification audits.
+* ` Queries/`: Production-ready `.sql` files containing schema-building dimension code blocks and BigQuery aggregation scripts.
+* ` Dashboard/`: Interface screenshots, data wireframe layout blueprints, and visual presentation assets.
