@@ -9,8 +9,6 @@ WITH NormalizedTransactions AS (
     CAST(transaction_id AS STRING) AS tx_id,
     CAST(cust_id AS INT64) AS customer_fk,
     PARSE_DATE('%d-%m-%Y', CAST(tran_date AS STRING)) AS transaction_timestamp,
-    CAST(prod_cat_code AS INT64) AS category_fk,
-    CAST(prod_subcat_code AS INT64) AS subcategory_fk,
     CAST(Qty AS INT64) AS item_quantity,
     CAST(Rate AS NUMERIC) AS unit_rate,
     CAST(Tax AS NUMERIC) AS line_tax,
