@@ -1,0 +1,18 @@
+This study develops a GIS-based prospectivity model for identifying Kuroko-type
+volcanogenic massive sulfide (VMS) deposits in the Eskay Creek area, British Columbia. By
+integrating geological, geochemical, and geophysical datasets, the model highlights zones
+most likely to host these precious metal-rich deposits. Geochemical indicators such as barium
+(Ba), manganese (Mn), zinc (Zn), silver (Ag), mercury (Hg), and antimony (Sb) were
+identified as key pathfinders associated with hydrothermal mineralization. Geological
+controls including andesitic volcanic and volcaniclastic host rocks, along with structural
+features like dense fault networks, were found to strongly influence mineralization
+localization. Geophysical data, represented by gravity and magnetic anomalies, further
+refined prospectivity mapping. The combined weighted overlay approach produced a
+continuous prospectivity raster that effectively discriminates high-potential areas along the
+central volcanic belt. Validation against 51 known deposits yielded an area under curve
+(AUC) of 0.935, confirming strong predictive performance. The model reproduces
+established geological and geochemical patterns consistent with Eskay Creek-type VMS
+systems and offers a practical exploration tool for targeting new deposits. Recommendations
+include focused infill sampling, alteration mineral mapping, and 3D modeling to enhance
+prediction accuracy. This integrated GIS methodology sets a foundation for regional
+exploration and can be adapted to similar terranes worldwide.
