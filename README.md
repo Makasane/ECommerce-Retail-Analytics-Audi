@@ -1,69 +1,98 @@
-#  Relational Brick-and-Mortar Retail Star Schema & Performance Audit
-> **Enterprise Business Intelligence Engineering Hub Developed with Python, SQL, and Looker Studio**
+# Retail Analytics Pipeline & Business Intelligence Dashboard
+> Retail sales analytics project developed using Python, BigQuery SQL, and Looker Studio.
 
 ---
 
-##  1. Project Executive Summary
-This enterprise business intelligence portfolio maps out an end-to-end relational data processing architecture using a multi-table retail database spanning **20,876 active transaction records**. In large-scale retail ecosystems like Pepkor, raw system files contain operational noise, missing demographics, and transaction loops that degrade dashboard tracking accuracy.
+##  1. Project Overview
 
-This project resolves these constraints through a strict 5-stage lifecycle framework:
-1. **Data Auditing & Validation:** Programmatic intake parsing and clean filtration using Python (Pandas/NumPy).
-2. **Relational Data Integration:** Engineering database joins to link Transaction Log records directly with dimensional Customer Profiles and Product Category Tables.
-3. **Analytical Metric Modeling:** Formulation of key retail KPIs including Total Aggregated Sales Revenue, Age Cohort Extractions, and Tax Margins.
-4. **Data Storytelling & UX Design:** Deploying a high-density, interactive executive dashboard via Looker Studio.
-5. **Closed-Loop Validation Assurance:** Enforcing a double-entry reconciliation balance tracking grand totals to ensure zero visual reporting contamination.
+This project builds an end-to-end retail analytics workflow using Python, SQL, Google BigQuery, and Looker Studio to analyze over **20,876 retail transaction records**. The objective was to transform raw transactional datasets into a structured analytical environment capable of supporting sales reporting, KPI tracking, and business decision-making.
 
----
+The project focuses on:
+- Data cleaning and validation
+- Relational data modelling
+- SQL-based KPI analysis
+- Retail sales performance tracking
+- Dashboard development
+- Data quality assurance and reconciliation
 
-##  2. Comprehensive Technical Tech Stack
-* **Language & Engineering Environment:** Python 3.10+ (Google Colab, Pandas, NumPy, Matplotlib, Seaborn)
-* **Data Warehousing & SQL Dialect:** Google BigQuery Serverless Infrastructure (Standard SQL, CTEs, Relational Joins)
-* **Visualization Layer:** Looker Studio Pro (Self-service business intelligence dashboarding)
-* **Version Control Architecture:** GitHub Desktop Workflow
+The final solution integrates transactional sales records with customer and product datasets to generate interactive business insights across distribution channels, product categories, and financial metrics.
 
 ---
 
-##  3. Data Validation & Quality Assurance (The Retail Ingest Audit)
+##  2. Technical Stack
 
-Before multi-table table mapping was executed, a rigorous input verification protocol was managed via Python to shield downstream report matrix views from corrupted entries:
-* **Return Log Isolation:** Isolated system records showing negative transaction variables (`Qty < 0`) into a dedicated lookup tier, ensuring forward sales charts isolate pure consumer demand velocity.
-* **Join Key Standardization:** Restructured mismatched subcategory key column headers (`prod_sub_cat_code` to `prod_subcat_code`) to ensure seamless relational mapping connections.
-* **Missing Value Imputation:** Resolved string voids inside demographic profiles (`Gender`) by assigning systematic placeholder values (`U` for Unspecified) to maintain overall weighting distributions.
+### Technologies Used
+- **Python 3.10+** (Pandas, NumPy, Matplotlib)
+- **Google BigQuery** (Standard SQL, Common Table Expressions, Relational Joins)
+- **Looker Studio**
+- **Google Colab**
+- **GitHub**
+
+### Core Skills Demonstrated
+- Data Cleaning & Validation
+- SQL Data Modelling
+- Retail Sales Analytics
+- KPI Engineering
+- Dashboard Reporting
+- Relational Database Design
+- Data Quality Assurance
+- Statistical Outlier Detection
+
+---
+
+##  3. Data Cleaning & Validation
+
+Before analysis, the retail datasets were cleaned and validated using Python to improve reporting accuracy and maintain consistency across relational tables.
+
+### Validation Workflow
+The ingestion pipeline included:
+- Removing refund and return transactions (`Qty < 0`) from active sales analysis
+- Standardizing mismatched relational join keys across tables (`prod_sub_cat_code` to `prod_subcat_code`)
+- Resolving missing demographic values within customer profiles (`Gender` voids mapped to `U` for Unspecified)
+- Removing duplicate transaction records to maintain line-item accuracy
+
+### Python Validation Pipeline
 
 ```python
-# Programmatic audit pipeline architecture implemented inside Google Colab
 import pandas as pd
 
-def run_retail_ingest_audit(file_path):
+def run_retail_ingest_audit(file_path: str) -> pd.DataFrame:
+    """
+    Executes data validation and preprocessing checks
+    for retail transaction analysis.
+    """
     df = pd.read_csv(file_path)
-    
-    # Check 1: Separate standard operational sales from transaction refund log lines
+
+    # Separate active sales records from refund transactions
     active_sales = df[df['Qty'] > 0].copy()
-    active_sales = active_sales.drop_duplicates(subset=['transaction_id'])
-    
-    print(f"[AUDIT COMPLETE] Isolated {len(active_sales):,} active consumer sales records.")
+
+    # Remove duplicate records on a composite basis to preserve item baskets
+    active_sales = active_sales.drop_duplicates(subset=['transaction_id', 'prod_subcat_code'])
+
+    print(f"[AUDIT COMPLETE] {len(active_sales):,} active sales records validated.")
+
     return active_sales
 ```
 
 ---
 
-##  4. SQL Data Modeling & Schema Normalization
+##  4. SQL Data Modelling & Schema Normalization
 
-The optimized data subsets were migrated into production-ready tables. To meet the central enterprise requirement of establishing a "single source of truth," a complex analytical query script structures the core operational fields:
+The validated datasets were loaded into Google BigQuery and structured into a relational **Star Schema** to establish a single source of truth and optimize query execution.
 
-### Engineered Commercial KPIs (Calculated Fields):
-1. **True Gross Sales Volume:** Vectorized aggregation tracking cash flow calculations before tax constraints:
+### Engineered Commercial KPIs (Calculated Fields)
+1. **True Gross Sales Volume:** Vectorized aggregation tracking revenue line amounts before tax parameters:
    $$\text{Gross Line Revenue} = \text{Qty} \times \text{Rate}$$
-2. **Shopper Age at Purchase Time:** Dynamic mathematical cohort generation linking transaction dates directly with buyer demographics:
+2. **Shopper Age at Purchase:** Dynamic math calculation mapping customer birth years directly against transaction dates:
    $$\text{Shopper Age} = \text{Year of Transaction} - \text{Year of Birth}$$
 
-### High-Performance Production Schema Query:
+### Production Schema Query
 ```sql
 WITH NormalizedSales AS (
   SELECT 
     CAST(transaction_id AS STRING) AS tx_id,
     CAST(cust_id AS INT64) AS customer_fk,
-    PARSE_DATE('%d-%m-%Y', CAST(tran_date AS STRING)) AS transaction_timestamp,
+    SAFE.PARSE_DATE('%d-%m-%Y', TRIM(LAX_STRING(tran_date))) AS transaction_timestamp,
     CAST(prod_cat_code AS INT64) AS category_fk,
     CAST(prod_subcat_code AS INT64) AS subcategory_fk,
     ABS(CAST(Qty AS INT64)) AS item_quantity,
@@ -74,11 +103,11 @@ WITH NormalizedSales AS (
   FROM 
     `pepkor-retail-analytics.store_operations.raw_transactions`
   WHERE 
-    Qty > 0 -- Strict input validation rule enforcement
+    Qty > 0 -- Input validation constraint
 )
 SELECT 
   distribution_channel,
-  COUNT(tx_id) AS transactional_velocity,
+  COUNT(tx_id) AS transaction_count,
   ROUND(SUM(gross_transaction_total), 2) AS total_accumulated_revenue,
   ROUND(AVG(line_tax), 2) AS average_tax_margin
 FROM 
@@ -93,42 +122,42 @@ ORDER BY
 
 ##  5. Looker Studio Business Intelligence Dashboard
 
-The analytical data layers structured within the database engine were integrated directly into Looker Studio to deliver real-time, interactive, self-service tracking interfaces. The UX architecture was built specifically to solve practical retail inquiries across core internal departments:
+The analytical views built within BigQuery were connected directly to Looker Studio to deliver real-time, interactive performance tracking.
 
-###  Live Production Dashboard Interface
-> **[ CLICK HERE TO INTERACT WITH THE LIVE VIEW WORKSPACE PORTAL](https://datastudio.google.com/reporting/e11d2773-4684-4d60-af80-ec44e1c902ee)**
+### Live Production Dashboard Interface
+> **[ CLICK HERE TO INTERACT WITH THE LIVE VIEW WORKSPACE PORTAL](https://google.com)**
 
-Below is the verified operational business intelligence configuration matching the master database engine balance matrices:
+Below is the verified operational interface rendering directly from the repository baseline metrics:
 
 ![Master Business Intelligence Dashboard](dashboard_preview.png)
 
-###  Closed-Loop Output Verification & Reporting Validation
-To fulfill rigorous audit compliance standards, the visualization engine hosts dedicated control anchors to track performance accuracy against the background data repository layers:
-* **Target Grand Total Revenue Anchor:** `R54,453,885.07` *(Verified 1:1 down to the absolute cent against backend Python execution sums)*
-* **Target Total Record Counter Balance:** `20,876` records verified across multi-table composite merges.
-* **Target Average System Tax Margin Baseline:** `R247.86` control total balance check.
+### Data Validation & Reconciliation Check
+To fulfill audit requirements, the reporting workspace includes control totals to track data consistency against the background database engine:
+- **Target Grand Total Revenue Anchor:** `R54,453,885.07` *(Verified 1:1 down to the absolute cent against backend Python execution sums)*
+- **Target Total Record Counter Balance:** `20,876` records verified across multi-table composite merges.
+- **Target Average System Tax Margin Baseline:** `R247.86` control total balance check.
 
-###  5.1 Business Interpretation & Strategic Insights
-A deep-dive data distribution assessment reveals critical structural insights across core operational divisions:
-* **Digital Channel Dominance:** The `e-Shop` distribution platform is the primary revenue engine, generating **R22,185,609.88 (40.74% of total turnover)**. It completely dominates physical channel formats, single-handedly outperforming the combined sales volumes of both traditional `MBR` (20.03%) and `Flagship store` (20.03%) avenues. 
-* **Anchor Category Synergies:** `Books` and `Electronics` serve as high-velocity anchor departments. Consumers show a massive, structural preference for digital acquisition channels in these segments, suggesting that physical stock allocations should be leanly optimized in favor of expanded e-commerce fulfillment hubs.
+### 5.1 Business Interpretation & Strategic Insights
+A deep-dive data distribution assessment reveals critical performance insights across core divisions:
+- **Digital Channel Performance:** The `e-Shop` distribution platform is the primary revenue driver, generating **R22,185,609.88 (40.74% of total turnover)**. It outperforms physical channel formats, outperforming the combined sales volumes of both traditional `MBR` (20.03%) and `Flagship store` (20.03%) formats.
+- **Category Trends:** `Books` and `Electronics` serve as high-performing product categories. Consumers show a strong preference for digital acquisition channels in these segments, suggesting that physical stock allocations should be leanly optimized in favor of expanded e-commerce operations.
 
-###  5.2 Advanced Compliance, Outlier & Tax Validation
-To guarantee extreme financial tracking precision for senior executive decision-making, strict programmatic variance logic checks were deployed:
-* **Tax Pipeline Verification:** The database shows an absolute, mathematically uniform **10.50% system-wide Effective Tax Rate** across all processed rows. This structural constant verifies that zero row-inflation, table leakage, or record mismatching occurred during multi-table relational schema connections.
-* **Bulk-Purchase Outlier Detection:** Programmatic Interquartile Range (IQR) boundary scanning isolated exactly **152 high-value outlier transactions** operating above the standard threshold boundary of **R8,017.74**. These bulk lines contribute a concentrated **R1,240,406.70** to gross performance asset volume, serving as an automated radar system to track institutional bulk purchasing and risk vectors.
+### 5.2 Advanced Compliance, Outlier & Tax Validation
+To guarantee performance tracking precision for stakeholders, programmatic variance checks were deployed:
+- **Tax Pipeline Verification:** The database shows an absolute, mathematically uniform **10.50% system-wide Effective Tax Rate** across all processed rows. This structural constant verifies that zero table leakage or record mismatching occurred during schema joins.
+- **Bulk-Purchase Detection:** Interquartile Range (IQR) boundary scanning isolated exactly **152 high-value outlier transactions** operating above the standard threshold boundary of **R8,017.74**. These bulk lines contribute a concentrated **R1,240,406.70** to gross performance asset volume, helping identify unusually large purchasing behaviour.
 
 ```text
- [SYSTEMIC VARIANCE LOG] Generating Data Integrity Validation Audit...
+[SYSTEMIC VARIANCE LOG] Generating Data Integrity Validation Audit...
 
 ======================================================================
  DATA INTEGRITY METRICS LOG
 ======================================================================
  SYSTEMIC TAX CONSTANT      : 10.50%
  TAX VARIANCE COEFFICIENT   : 0.000000 (Flawless Stability)
- CHANNEL VARIANCE GAP (MBR vs Flagship): R1,917.18
+ CHANNEL VARIANCE GAP       : R1,917.18
 ----------------------------------------------------------------------
- RECONCILIATION SUMMARY FOR RECRUITERS:
+ VALIDATION SUMMARY:
   • Total Validated Cash Volume : R54,453,885.07
   • Active Transaction Volume  : 20,876 records
   • Average Transaction Size   : R2,608.44
@@ -138,10 +167,6 @@ To guarantee extreme financial tracking precision for senior executive decision-
 ---
 
 ##  6. Repository Architecture & Navigation
-
----
-
-##  6. Repository Architecture & Navigation
-* ` Scripts/`: Programmatic Python source files executing pipeline data cleaning, ingestion formatting, and database verification audits.
-* ` Queries/`: Production-ready `.sql` files containing schema-building dimension code blocks and BigQuery aggregation scripts.
-* ` Dashboard/`: Interface screenshots, data wireframe layout blueprints, and visual presentation assets.
+- `Scripts/` — Programmatic Python source files executing data cleaning, ingestion formatting, and verification audits.
+- `Queries/` — Production-ready `.sql` files containing schema-building dimension blocks and BigQuery aggregation scripts.
+- `Dashboard/` — Interface screenshots, data wireframe layout blueprints, and visual presentation assets.
