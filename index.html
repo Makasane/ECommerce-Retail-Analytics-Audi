@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tsakani Makasane - Interactive Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #2d3748; max-width: 900px; margin: 0 auto; padding: 30px 20px; background-color: #f7fafc; }
+        .card { background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; border-top: 5px solid #1a365d; }
+        .header { text-align: center; margin-bottom: 40px; padding-bottom: 25px; border-bottom: 2px solid #e2e8f0; }
+        h1 { color: #1a365d; margin: 0; font-size: 2.5em; letter-spacing: -0.5px; }
+        .subtitle { font-size: 1.2em; color: #4a5568; font-weight: 600; margin: 8px 0; }
+        h2 { color: #2c5282; font-size: 1.6em; margin-top: 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #edf2f7; padding-bottom: 10px; }
+        .tag { font-style: italic; color: #4a5568; background: #edf2f7; padding: 4px 12px; border-radius: 6px; font-size: 0.8em; font-weight: normal; }
+        ul { padding-left: 20px; margin: 15px 0; }
+        li { margin-bottom: 10px; }
+        .visual-container { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-top: 20px; display: grid; grid-template-columns: 1fr; gap: 20px; text-align: center; }
+        @media (min-width: 768px) { .visual-container { grid-template-columns: 1fr 1fr; text-align: left; } }
+        .chart-box { max-height: 280px; width: 100%; position: relative; margin: 0 auto; }
+        .stats-box { background: white; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.9em; }
+        .metric-title { font-weight: bold; color: #1a365d; border-bottom: 1px solid #edf2f7; padding-bottom: 5px; margin-bottom: 5px; }
+        .links a { color: #2b6cb0; text-decoration: none; font-weight: bold; margin: 0 10px; }
+        .setup-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        @media (min-width: 600px) { .setup-grid { grid-template-columns: 1fr 1fr; } }
+        .skills { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; list-style: none; }
+        .skills li { background: #e2e8f0; color: #2d3748; padding: 6px 12px; border-radius: 4px; font-size: 0.85em; font-weight: 500; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>TSAKANI MAKASANE</h1>
+        <div class="subtitle">Quantitative Data Analyst | SQL, Python & Dashboard Reporting</div>
+        <div class="links">
+            <a href="mailto:makasanetsakani815@gmail.com">makasanetsakani815@gmail.com</a> | 
+            <a href="https://github.com/Makasane" target="_blank">GitHub Profile</a> | 
+            <a href="https://linkedin.com/in/tsakani-makasane" target="_blank">LinkedIn Profile</a>
+        </div>
+    </div>
+
+    <!-- PROJECT 1 -->
+    <div class="card">
+        <h2>Retail Analytics & KPI Reporting Pipeline <span class="tag">Python | BigQuery | Looker Studio</span></h2>
+        <p>An end-to-end data processing and business intelligence pipeline built to clean, structure, and model transactional datasets.</p>
+        <ul>
+            <li>Processed and structured 20,000+ retail transaction records through an automated Python and BigQuery cleaning pipeline.</li>
+            <li>Designed a star-schema relational model grouping messy fields into clean fact and dimension tables.</li>
+            <li>Developed automated data validation scripts to remove database duplication errors while preserving individual basket data.</li>
+            <li>Reconciled reporting metrics perfectly back to a baseline total of R54,453,885.07 with zero data loss.</li>
+        </ul>
+        
+        <div class="visual-container">
+            <div class="chart-box">
+                <canvas id="retailChart"></canvas>
+            </div>
+            <div class="stats-box">
+                <div class="metric-title">Pipeline Metadata Anchor</div>
+                <strong>Database Row Count:</strong> 20,876 Rows<br>
+                <strong>Financial Baseline:</strong> R54,453,885.07<br>
+                <strong>Deduplication Status:</strong> Verified & Clean<br>
+                <strong>Active Channels Tracked:</strong> E-Commerce, Retail, Resellers
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJECT 2 -->
+    <div class="card">
+        <h2>Predictive Spatial Analytics & Quantitative Modelling <span class="tag">Python | GIS | Geostatistics</span></h2>
+        <p>An advanced quantitative data framework focused on integrating and validating massive, heterogeneous datasets into a unified spatial analytics model.</p>
+        <ul>
+            <li>Conducted multi-source data analysis integrating spatial, chemical concentration, and physical data layers.</li>
+            <li>Applied weighted multi-criteria modelling and feature evaluations across a 17-variable statistical matrix.</li>
+            <li>Built continuous trend surfaces using Inverse Distance Weighting (IDW) interpolation within GIS environments.</li>
+            <li>Validated prediction accuracy against ground-truth arrays using ROC-AUC curve methodology.</li>
+        </ul>
+
+        <div class="visual-container">
+            <div class="chart-box">
+                <canvas id="rocChart"></canvas>
+            </div>
+            <div class="stats-box">
+                <div class="metric-title">Model Validation Metrics</div>
+                <strong>Validated Model Score:</strong> <span style="color:#2b6cb0; font-weight:bold;">0.935 AUC</span><br>
+                <strong>Total Evaluated Variables:</strong> 17 Statistical Factors<br>
+                <strong>Interpolation Method:</strong> Inverse Distance Weighting (IDW)<br>
+                <strong>Target Accuracy Class:</strong> Top-Tier / High Precision
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFESSIONAL READINESS -->
+    <div class="card" style="border-top-color: #2b6cb0;">
+        <h2>Remote Infrastructure & Professional Readiness</h2>
+        <div class="setup-grid">
+            <div>
+                <p><strong>Remote Operational Setup:</strong></p>
+                <ul>
+                    <li><strong>Workplace Environment:</strong> Quiet, dedicated home office workspace completely optimized for focused, independent delivery.</li>
+                    <li><strong>Uptime & Connectivity:</strong> High-speed, stable fibre internet connection paired with a backup power setup to ensure uninterrupted communication and output during power outages.</li>
+                    <li><strong>Availability:</strong> Immediate availability for contract assignment, fully prepared to work fixed, remote UK-aligned hours.</li>
+                </ul>
+            </div>
+            <div>
+                <p><strong>Core Technical Competencies:</strong></p>
+                <ul class="skills">
+                    <li>SQL Data Extraction</li>
+                    <li>Python Data Processing</li>
+                    <li>Pandas / NumPy</li>
+                    <li>Looker Studio BI Design</li>
+                    <li>Database Relational Modelling</li>
+                    <li>Schema Normalisation</li>
+                    <li>Data Validation & QC</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Retail Chart Generation
+        const ctxRetail = document.getElementById('retailChart').getContext('2d');
+        new Chart(ctxRetail, {
+            type: 'bar',
+            data: {
+                labels: ['Q1 Revenue', 'Q2 Revenue', 'Q3 Revenue', 'Q4 Revenue'],
+                datasets: [{
+                    label: 'Pipeline Financial Reconciliation Baseline (ZAR)',
+                    data: [12100000, 14300000, 13850000, 14203885],
+                    backgroundColor: '#2c5282',
+                    borderRadius: 4
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { font: { size: 11 } } } } }
+        });
+
+        // ROC AUC Chart Generation
+        const ctxRoc = document.getElementById('rocChart').getContext('2d');
+        new Chart(ctxRoc, {
+            type: 'line',
+            data: {
+                labels: ['0.0', '0.2', '0.4', '0.6', '0.8', '1.0'],
+                datasets: [
+                    {
+                        label: 'Model Precision Curve (AUC = 0.935)',
+                        data: [0, 0.75, 0.88, 0.935, 0.97, 1.0],
+                        borderColor: '#2b6cb0',
+                        backgroundColor: 'rgba(43, 108, 176, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Random Baseline (AUC = 0.50)',
+                        data: [0, 0.2, 0.4, 0.6, 0.8, 1.0],
+                        borderColor: '#cbd5e0',
+                        borderDash: [5, 5],
+                        fill: false
+                    }
+                ]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { font: { size: 11 } } } } }
+        });
+    </script>
+</body>
+</html>
